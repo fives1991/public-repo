@@ -10,3 +10,8 @@ df %>%
   write_csv('output.csv')
 
 
+df %>% 
+  select(`Id text`:`Test Result`) %>%
+  pivot_wider(names_from = 2,
+              values_from = 3) %>%
+  write_csv('output.csv')
