@@ -13,10 +13,12 @@ df %>%
 
 
 -- Hub change 06/07/2021
-df %>% 
-  dplyr::select(Id text:`Test Result`,1:13) %>%
+df <- df %>% 
+  dplyr::select(`Id text`:`Test Result`,1:13) %>%
   tidyr::pivot_wider(names_from = Analysis,
-              values_from = Test Result) %>%
+              values_from = `Test Result`)
+
+df %>%
   mutate(across(all_of(14:max(ncol(df))-2), ~replace_na(.,''))) %>%
-  mutate(`Job date completed` = lubridate::mdy(`Job date completed`) %>%
+  mutate(`Job date completed` = lubridate::ymd(`Job date completed`))%>%
   write_csv('output.csv')
